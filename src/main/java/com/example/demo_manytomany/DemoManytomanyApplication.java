@@ -42,16 +42,42 @@ public class DemoManytomanyApplication {
 //                    c.setTime(2000);
 //                    courseRepository.save(c);
 //                }
-            Course c=courseRepository.findById(2L).get();
-            Student s=studentRepository.findById(4L).get();
-//            c.addStudent(s);
-            s.addCourse(c);
+//          adaugare enrolment
+//            Course c=courseRepository.findById(7L).get();
+//            Student s=studentRepository.findById(4L).get();
+//
+//            s.addCourse(c);
+//            studentRepository.save(s);
 
-//            Book bk=bookRepository.findById(4L).get();
-//            System.out.println("--------"+bk.getStudent());
-//            s.removeBook(bk);
-            studentRepository.save(s);
+//adaugare book
+//
+//                Student s=studentRepository.findById(4L).get();
+//                Book bk=new Book("Cartea noua");
+//                s.addBook(bk);
+//                studentRepository.save(s);
 
+//        Book bk=bookRepository.findById(4L).get();
+//        Student s=studentRepository.findById(3L).get();
+//        s.removeBook(bk);
+//        studentRepository.save(s);
+//  delete enrolment
+//                Student s=studentRepository.findById(4L).get();
+//                Course c=courseRepository.findById(7L).get();
+//                s.removeCourse(c);
+//                studentRepository.save(s);
+
+        Student s=studentRepository.findById(4L).get();
+            //System.out.println(s.getBooks().toString());
+            //System.out.println(s.getCourses().toString());
+            System.out.println("Student :"+s.getFirstName()+" "+s.getLastName());
+            System.out.println("Cartile mele :");
+            s.getBooks().forEach((e)->{
+                System.out.println(e.getTitle());
+            });
+            System.out.println("Cursurile mele :");
+            s.getCourses().forEach((c)->{
+                System.out.println(c.getName()+" "+c.getDepartment()+" dep:"+c.getDepartment());
+            });
 
         };
     }

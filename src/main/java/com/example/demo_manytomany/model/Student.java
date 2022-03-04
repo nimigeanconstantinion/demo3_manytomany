@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.EqualsExclude;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
@@ -23,6 +26,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Student {
 
     @Id
@@ -93,18 +97,23 @@ public class Student {
     private List<Course> courses = new ArrayList<>();
 
     @JsonManagedReference
+
     @OneToMany(
             mappedBy = "student",
-            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     @JsonBackReference
-    Set<Book> books = new HashSet<>();
+    @LazyCollection(LazyCollectionOption.FALSE)
+    List<Book> books = new ArrayList<>();
 
 
     public void addCourse(Course course){
         this.courses.add(course);
+    }
+
+    public void removeCourse(Course course){
+        this.courses.remove(course);
     }
 
     @Transactional
@@ -115,7 +124,7 @@ public class Student {
 
     @Transactional
     public void removeBook(Book book){
-        this.books.remove(book);
+        this.books.removeIf(b->b.getId()==book.getId());
 
     }
 
@@ -178,7 +187,7 @@ public class Student {
 
         Student aux=(Student) o;
 
-        return aux.getEmail().equals(this.getEmail())&&aux.getPassword().equals(aux.getPassword());
+        return aux.getEmail().equals(this.getEmail());
     }
 
 
