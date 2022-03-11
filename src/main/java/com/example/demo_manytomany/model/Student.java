@@ -96,14 +96,13 @@ public class Student {
             inverseJoinColumns = { @JoinColumn(name = "fk_course") })
     private List<Course> courses = new ArrayList<>();
 
-    @JsonManagedReference
 
+    @JsonManagedReference
     @OneToMany(
             mappedBy = "student",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @JsonBackReference
     @LazyCollection(LazyCollectionOption.FALSE)
     List<Book> books = new ArrayList<>();
 

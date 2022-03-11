@@ -1,9 +1,8 @@
 package com.example.demo_manytomany.services;
 
-import com.example.demo_manytomany.exceptions.BadRequest;
-import com.example.demo_manytomany.exceptions.BookException;
-import com.example.demo_manytomany.exceptions.StundentExists;
+import com.example.demo_manytomany.exceptions.*;
 import com.example.demo_manytomany.model.Book;
+import com.example.demo_manytomany.model.Course;
 import com.example.demo_manytomany.model.Student;
 import com.example.demo_manytomany.repository.BookRepository;
 import com.example.demo_manytomany.repository.CourseRepository;
@@ -32,6 +31,15 @@ public class StudentServices {
 
         }
 
+        public void removeStudent(Student student){
+            if(!studentRepository.findStudentByEmail(student.getEmail()).isPresent()){
+                studentRepository.delete(student);
+            }else {
+                throw new NotFoundStudent("Student not found");
+            }
+
+        }
+
         public void addBook(Student student,Book book){
             if(!bookRepository.findBookByStudentAndTitle(student,book.getTitle()).isPresent()){
                 student.addBook(book);
@@ -41,6 +49,61 @@ public class StudentServices {
             }
         }
 
+        public void removeBook(Student student,Book book){
+            if(bookRepository.findBookByStudentAndTitle(student, book.getTitle()).isPresent()){
+                student.removeBook(book);
+                studentRepository.save(student);
+            }else{
+                throw new BookException("You don't have this book");
+            }
+        }
+
+        public void addEnrolment(Student student, Course course){
+           if(studentRepository.findStudentByEmail(student.getEmail()).isPresent()){
+               if(courseRepository.findById(course.getId()).isPresent()){
+                   student.addCourse(course);
+                   studentRepository.save(student);
+
+               }else{
+                    throw new CourseException("Course didn't exist!");
+               }
+           }else{
+               throw new StudentException("Student not found!!");
+           }
+
+    }
+
+        public void removeEnrolment(Student student,Course course){
+            if(studentRepository.findStudentByEmail(student.getEmail()).isPresent()){
+                if(courseRepository.findById(course.getId()).isPresent()){
+                    student.removeCourse(course);
+                    studentRepository.save(student);
+
+                }else{
+                    throw new CourseException("Course didn't exist!");
+                }
+            }else{
+                throw new StudentException("Student not found!!");
+            }
+
+        }
+
+        public void addCourse(Course c){
+            if(courseRepository.findAll().stream().filter(x->x.equals(c)).collect(Collectors.toList()).size()==0){
+                courseRepository.save(c);
+            }else{
+                throw new CourseException("Course exist!!");
+
+            }
+        }
+
+    public void removeCourse(Course c){
+        if(courseRepository.findAll().stream().filter(x->x.equals(c)).collect(Collectors.toList()).size()>0){
+            courseRepository.save(c);
+        }else{
+            throw new CourseException("Course didn't exist!!");
+        }
+    }
 
 
 }

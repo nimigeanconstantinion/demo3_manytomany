@@ -66,18 +66,19 @@ public class DemoManytomanyApplication {
 //                s.removeCourse(c);
 //                studentRepository.save(s);
 
-        Student s=studentRepository.findById(4L).get();
-            //System.out.println(s.getBooks().toString());
-            //System.out.println(s.getCourses().toString());
-            System.out.println("Student :"+s.getFirstName()+" "+s.getLastName());
-            System.out.println("Cartile mele :");
-            s.getBooks().forEach((e)->{
-                System.out.println(e.getTitle());
-            });
-            System.out.println("Cursurile mele :");
-            s.getCourses().forEach((c)->{
-                System.out.println(c.getName()+" "+c.getDepartment()+" dep:"+c.getDepartment());
-            });
+//        Student s=studentRepository.findById(4L).get();
+//            //System.out.println(s.getBooks().toString());
+//            //System.out.println(s.getCourses().toString());
+//            System.out.println("Student :"+s.getFirstName()+" "+s.getLastName());
+//            System.out.println("Cartile mele :");
+//            s.getBooks().forEach((e)->{
+//                System.out.println(e.getTitle());
+//            });
+//            System.out.println("Cursurile mele :");
+//            s.getCourses().forEach((c)->{
+//                System.out.println(c.getName()+" "+c.getDepartment()+" dep:"+c.getDepartment());
+//            });
+
 
         };
     }

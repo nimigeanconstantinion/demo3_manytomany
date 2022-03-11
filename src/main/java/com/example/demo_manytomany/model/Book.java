@@ -68,6 +68,6 @@ public class Book {
 
     public boolean equals(Object o){
         Book b=(Book) o;
-        return this.hashCode()==b.hashCode();
+        return this.title.equals(b.title);
     }
 }
