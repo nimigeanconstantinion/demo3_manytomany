@@ -62,7 +62,7 @@ class StudentServicesTest {
 
         Student s=new Student(fk.name().firstName(),
                 fk.name().lastName(),
-                fk.internet().emailAddress(),"123",33);
+                fk.internet().emailAddress(),"123",33,0);
         //given
 
         given(this.studentRepository.findStudentByEmail(s.getEmail())).willReturn(Optional.empty());
@@ -82,7 +82,7 @@ class StudentServicesTest {
         Faker fk=new Faker();
         Student s=new Student(fk.name().firstName(),
                 fk.name().lastName(),
-                fk.internet().emailAddress(),"123",33);
+                fk.internet().emailAddress(),"123",33,0);
         //given
         given(this.studentRepository.findStudentByEmail(s.getEmail())).willReturn(Optional.of(s));
 
@@ -96,7 +96,7 @@ class StudentServicesTest {
         Faker fk=new Faker();
         Student s=new Student(fk.name().firstName(),
                 fk.name().lastName(),
-                fk.internet().emailAddress(),"123",33);
+                fk.internet().emailAddress(),"123",33,0);
         Book book=new Book(fk.book().title());
         //given
         given(this.bookRepository.findBookByStudentAndTitle(s,book.getTitle())).willReturn(Optional.empty());
@@ -114,7 +114,7 @@ class StudentServicesTest {
         Faker fk=new Faker();
         Student s=new Student(fk.name().firstName(),
                 fk.name().lastName(),
-                fk.internet().emailAddress(),"123",33);
+                fk.internet().emailAddress(),"123",33,0);
 
         Book book=new Book(fk.book().title());
 
@@ -129,7 +129,7 @@ class StudentServicesTest {
     @Test
     void addEnrolmentWork() {
         Course c= new Course("Cursul 1","IT",2D,"descript");
-        Student s=new Student("Ion","Ion","jj@yahoo.com","123",20);
+        Student s=new Student("Ion","Ion","jj@yahoo.com","123",20,0);
         //given
         given(this.studentRepository.findStudentByEmail(s.getEmail())).willReturn(Optional.of(s));
         given(this.courseRepository.findById(c.getId())).willReturn(Optional.of(c));
@@ -145,7 +145,7 @@ class StudentServicesTest {
     @Test
     void addEnrolmentNotFindStudent() {
         Course c= new Course("Cursul 1","IT",2D,"descript");
-        Student s=new Student("Ion","Ion","jj@yahoo.com","123",20);
+        Student s=new Student("Ion","Ion","jj@yahoo.com","123",20,0);
         //given
         given(this.studentRepository.findStudentByEmail(s.getEmail())).willReturn(Optional.empty());
 
@@ -155,7 +155,7 @@ class StudentServicesTest {
     @Test
     void addEnrolmentNotFindCourse() {
         Course c= new Course("Cursul 1","IT",2D,"descript");
-        Student s=new Student("Ion","Ion","jj@yahoo.com","123",20);
+        Student s=new Student("Ion","Ion","jj@yahoo.com","123",20,0);
         //given
         given(this.studentRepository.findStudentByEmail(s.getEmail())).willReturn(Optional.of(s));
 
@@ -169,9 +169,8 @@ class StudentServicesTest {
     @Test
     void removeEnrolment() {
         Course c= new Course("Cursul 1","IT",2D,"descript");
-        Student s=new Student("Ion","Ion","jj@yahoo.com","123",20);
+        Student s=new Student("Ion","Ion","jj@yahoo.com","123",20,0);
         //given
-       // given(this.studentRepository.findStudentByEmail(s.getEmail())).willReturn(Optional.of(s));
         given(this.studentRepository.findStudentByEmail(s.getEmail())).willReturn(Optional.of(s));
         given(this.courseRepository.findById(c.getId())).willReturn(Optional.of(c));
 

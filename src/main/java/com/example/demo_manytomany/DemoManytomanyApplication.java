@@ -6,6 +6,7 @@ import com.example.demo_manytomany.model.Student;
 import com.example.demo_manytomany.repository.BookRepository;
 import com.example.demo_manytomany.repository.CourseRepository;
 import com.example.demo_manytomany.repository.StudentRepository;
+import com.example.demo_manytomany.services.StudentServices;
 import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,10 +21,11 @@ public class DemoManytomanyApplication {
         SpringApplication.run(DemoManytomanyApplication.class, args);
     }
     @Bean
-    CommandLineRunner commandLineRunner(StudentRepository studentRepository, CourseRepository courseRepository, BookRepository bookRepository) {
+    CommandLineRunner commandLineRunner(StudentServices studentServices) {
         return args -> {
             Faker fk = new Faker();
-//            for(int i=1;i<10;i++){
+            System.out.println(studentServices.getAllStudents());
+            //            for(int i=1;i<10;i++){
 //                Student s=new Student();
 //                s.setFirstName(fk.name().firstName());
 //                s.setLastName(fk.name().lastName());

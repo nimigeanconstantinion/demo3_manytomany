@@ -1,6 +1,7 @@
 package com.example.demo_manytomany.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -72,18 +73,30 @@ public class Student {
     private Integer age;
 
     @Column(
+            name="role",
+            nullable = false,
+            columnDefinition = "INT"
+
+    )
+    int role;
+
+    @Column(
             name="password",
             nullable = false
     )
     private String password;
 
-    public Student(String firstName, String lastName, String email, String password,int age) {
+
+
+    public Student(String firstName, String lastName, String email, String password,int age,int role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.age=age;
+        this.role=role;
     }
+
 
     @JsonManagedReference
     @ManyToMany(
@@ -91,6 +104,7 @@ public class Student {
             fetch = FetchType.EAGER
 
     )
+
     @JoinTable(name = "enrolment",
             joinColumns = { @JoinColumn(name = "fk_author") },
             inverseJoinColumns = { @JoinColumn(name = "fk_course") })

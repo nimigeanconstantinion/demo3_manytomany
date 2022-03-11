@@ -7,9 +7,11 @@ import com.example.demo_manytomany.model.Student;
 import com.example.demo_manytomany.repository.BookRepository;
 import com.example.demo_manytomany.repository.CourseRepository;
 import com.example.demo_manytomany.repository.StudentRepository;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
 public class StudentServices {
 
         private StudentRepository studentRepository;
@@ -20,6 +22,10 @@ public class StudentServices {
             this.studentRepository=studentRepository;
             this.bookRepository=bookRepository;
             this.courseRepository=courseRepository;
+        }
+
+        public List<Student> getAllStudents(){
+            return studentRepository.findAll();
         }
 
         public void addStudent(Student student){
@@ -105,5 +111,11 @@ public class StudentServices {
         }
     }
 
-
+    public Student getUser(String email,String password){
+            if(studentRepository.findStudentByEmail(email).isPresent()){
+                return studentRepository.findStudentByEmail(email).get();
+            }else{
+                throw new StudentException("Email didn't exist");
+            }
+    }
 }
